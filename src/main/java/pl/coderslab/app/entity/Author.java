@@ -1,29 +1,23 @@
 package pl.coderslab.app.entity;
 
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import lombok.Data;
 
 @Entity
-@Table(name = "books")
+@Table(name = "authors")
 @Data
-public class Book {
+public class Author {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  private String title;
+  private String name;
 
-  private int rating;
+  private Integer yearOfBirth;
 
-  private String description;
-
-  @ManyToOne
-  private Publisher publisher;
 }
