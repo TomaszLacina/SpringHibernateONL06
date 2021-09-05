@@ -11,7 +11,7 @@ import pl.coderslab.app.entity.Author;
 public class AuthorDao {
 
   @PersistenceContext
-  EntityManager entityManager;
+  private EntityManager entityManager;
 
   public void save(Author author) {
     entityManager.persist(author);
