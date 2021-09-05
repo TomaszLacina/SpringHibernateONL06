@@ -3,13 +3,13 @@
 <html>
   <body>
 
-    <form method="POST">
-      <input type="text" name="login">
-      <input type="password" name="password">
-      <input type="text" name="email">
+    <form:form method="POST" modelAttribute="person">
+      <form:input path="login" />
+      <form:password path="password"/>
+      <form:input path="email"/>
 
-      <input type="submit">
-    </form>
+      <input type="submit" value="save">
+    </form:form>
 
   </body>
 </html>

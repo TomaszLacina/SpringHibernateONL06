@@ -7,7 +7,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import pl.coderslab.app.dao.PersonDao;
 import pl.coderslab.app.entity.Person;
@@ -21,17 +20,14 @@ public class PersonController {
 
   @GetMapping("/add")
   public String addForm(Model model) {
+    model.addAttribute("person", new Person());
+
     return "person-form";
   }
 
   @PostMapping("/add")
   @ResponseBody
-  public String add(@RequestParam("login") String login,
-      @RequestParam("password") String password,
-      @RequestParam("email") String email) {
-
-    Person person = new Person(null, login, password, email);
-
+  public String add(Person person) {
     personDao.save(person);
 
     return person.toString();
