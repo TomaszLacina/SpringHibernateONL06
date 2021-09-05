@@ -1,5 +1,6 @@
 package pl.coderslab.app.dao;
 
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
@@ -23,5 +24,10 @@ public class PublisherDao {
 
   public Publisher findById(Long id) {
     return entityManager.find(Publisher.class, id);
+  }
+
+  public List<Publisher> findAll() {
+    return entityManager.createQuery("SELECT p FROM Publisher p")
+        .getResultList();
   }
 }

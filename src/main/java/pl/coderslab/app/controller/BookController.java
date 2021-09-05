@@ -4,8 +4,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import pl.coderslab.app.dao.BookDao;
@@ -28,7 +31,7 @@ public class BookController {
 
     return all.stream()
         .map(Book::toString)
-        .collect(Collectors.joining());
+        .collect(Collectors.joining(" <br> "));
   }
 
   @GetMapping("/rating/{rating}")
@@ -39,6 +42,25 @@ public class BookController {
     return byRating.stream()
         .map(Book::toString)
         .collect(Collectors.joining("\n"));
+  }
+
+  @GetMapping("/add")
+  public String createForm(Model model){
+    model.addAttribute("book", new Book());
+
+    return "book-form";
+  }
+
+  @PostMapping("/add")
+  public String create(Book book){
+    bookDao.save(book);
+
+    return "redirect:/books";
+  }
+
+  @ModelAttribute("publishers")
+  public List<Publisher> getPublishers(){
+    return publisherDao.findAll();
   }
 
   @GetMapping("/add-with-publisher")

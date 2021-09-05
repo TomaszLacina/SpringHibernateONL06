@@ -4,6 +4,7 @@ import javax.persistence.EntityManagerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.format.FormatterRegistry;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalEntityManagerFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -39,6 +40,16 @@ public class AppConfig implements WebMvcConfigurer {
     viewResolver.setPrefix("/WEB-INF/views/");
     viewResolver.setSuffix(".jsp");
     return viewResolver;
+  }
+
+  @Override
+  public void addFormatters(FormatterRegistry registry) {
+    registry.addConverter(publisherConverter());
+  }
+
+  @Bean
+  public PublisherConverter publisherConverter() {
+    return new PublisherConverter();
   }
 
 }
