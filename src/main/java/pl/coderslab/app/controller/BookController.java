@@ -1,6 +1,7 @@
 package pl.coderslab.app.controller;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -16,8 +17,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import pl.coderslab.app.dao.BookDao;
 import pl.coderslab.app.dao.PublisherDao;
 import pl.coderslab.app.entity.Book;
+import pl.coderslab.app.entity.Category;
 import pl.coderslab.app.entity.Publisher;
 import pl.coderslab.app.repositories.BookRepository;
+import pl.coderslab.app.repositories.CategoryRepository;
 
 @RequestMapping("/books")
 @Controller
@@ -27,6 +30,7 @@ public class BookController {
   private final BookDao bookDao;
   private final PublisherDao publisherDao;
   private final BookRepository bookRepository;
+  private final CategoryRepository categoryRepository;
 
   @GetMapping
   @ResponseBody
@@ -55,11 +59,40 @@ public class BookController {
     return "book-form";
   }
 
+
+  @GetMapping("/testRepo")
+  @ResponseBody
+  public String testRepo(){
+    Category category = categoryRepository.findById(1L).get();
+
+    List<Book> withCategory = bookRepository.findByTitle("Z Kategoria");
+    List<Book> byCategoryId = bookRepository.findByCategoryId(2L);
+    List<Book> byCategory = bookRepository.findByCategory(category);
+    List<Book> byCategoryName = bookRepository.findByCategoryName("Kategoria 33");
+
+
+    withCategory.forEach(System.out::println);
+    System.out.println();
+    byCategoryId.forEach(System.out::println);
+    System.out.println();
+    byCategory.forEach(System.out::println);
+    System.out.println();
+    byCategoryName.forEach(System.out::println);
+
+
+    return "sprawdz w kosnoli";
+  }
   @PostMapping("/add")
   public String create(@Valid Book book, BindingResult result){
     if(result.hasErrors()){
       return "book-form";
     }
+
+    Category category = new Category();
+    category.setName("Kategoria 33");
+    categoryRepository.save(category);
+
+    book.setCategory(category);
     bookRepository.save(book);
 
     return "redirect:/books";
