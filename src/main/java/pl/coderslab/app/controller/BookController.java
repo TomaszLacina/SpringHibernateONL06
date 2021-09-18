@@ -17,6 +17,7 @@ import pl.coderslab.app.dao.BookDao;
 import pl.coderslab.app.dao.PublisherDao;
 import pl.coderslab.app.entity.Book;
 import pl.coderslab.app.entity.Publisher;
+import pl.coderslab.app.repositories.BookRepository;
 
 @RequestMapping("/books")
 @Controller
@@ -25,6 +26,7 @@ public class BookController {
 
   private final BookDao bookDao;
   private final PublisherDao publisherDao;
+  private final BookRepository bookRepository;
 
   @GetMapping
   @ResponseBody
@@ -58,7 +60,7 @@ public class BookController {
     if(result.hasErrors()){
       return "book-form";
     }
-    bookDao.save(book);
+    bookRepository.save(book);
 
     return "redirect:/books";
   }
