@@ -66,18 +66,27 @@ public class BookController {
     Category category = categoryRepository.findById(1L).get();
 
     List<Book> withCategory = bookRepository.findByTitle("Z Kategoria");
-    List<Book> byCategoryId = bookRepository.findByCategoryId(2L);
+    List<Book> byTitle = bookRepository.pleaseGiveMeBooksByTitle("Z Kategoria");
+
     List<Book> byCategory = bookRepository.findByCategory(category);
-    List<Book> byCategoryName = bookRepository.findByCategoryName("Kategoria 33");
+    List<Book> byCategoryQuery = bookRepository.pleaseGiveMeBooksByCategory(category);
+    //    List<Book> byCategoryId = bookRepository.findByCategoryId(2L);
+//    List<Book> byCategoryName = bookRepository.findByCategoryName("Kategoria 33");
 
 
     withCategory.forEach(System.out::println);
     System.out.println();
-    byCategoryId.forEach(System.out::println);
+    byTitle.forEach(System.out::println);
+    System.out.println();
+
+
+//    byCategoryId.forEach(System.out::println);
     System.out.println();
     byCategory.forEach(System.out::println);
     System.out.println();
-    byCategoryName.forEach(System.out::println);
+    byCategoryQuery.forEach(System.out::println);
+    System.out.println();
+//    byCategoryName.forEach(System.out::println);
 
 
     return "sprawdz w kosnoli";
